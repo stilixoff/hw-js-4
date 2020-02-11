@@ -2,38 +2,47 @@ const students = ["Саша", "Игорь", "Лена", "Ира", "Алексе�
 const themes = ["Дифференциальные уравнения", "Теория автоматов", "Алгоритмы и структуры данных"];
 const marks = [4, 5, 5, 3, 4, 5];
 
-const teams = () => {
-    let team = [[students[0], students[2]], 
+const teams = (students) => {
+    let res = [[students[0], students[2]], 
     [students[1], students[3]], 
     [students[4], students[5]]];
-    return team;
+    return res;
 }
 
-let pair = teams();
+console.log(teams(students));
 
-console.log(teams());
+const studentTeams = teams(students);
 
-const teamsSubject = () => {
-    let teamSubject = [];
-    for ( let i = 0; i < pair.length; i++) {
-        teamSubject.push(pair[i]);
-        teamSubject[i].push(themes[i]);
+function teamsAddSub(team, subject){
+    let res = [];
+    for(let i = 0; i < team.length; i++) {
+        res[i]= [team[i].join(' и '), subject[i]];
     }
-    return teamSubject;
+    return res;
 }
 
+console.log(teamsAddSub(studentTeams, themes));
 
+const teamsAndSubject = teamsAddSub(studentTeams, themes);
 
-console.log(teamsSubject());
-
-let teamSub = teamsSubject();
-
-
-const toRate = () => {
-    for (let i = 0; i < teamSub.length; i++) {
-        teamSub[i].push(marks[Math.floor(Math.random() * marks.length)]);
+function addStudentMarks(student, mark) {
+    let res = [];
+    for(let i = 0; i < student.length; i++) {
+        res[i] = [student[i], mark[i]];
     }
-    return teamSub;
+    return res;
 }
 
-console.log(toRate());
+console.log(addStudentMarks(students, marks));
+
+const studentMarks = addStudentMarks(students, marks);
+
+function addMarksForTeams(team, min, max) {
+    let res = [];
+    for(let i = 0; i < team.length; i++) {
+        res[i] = [team[i], [Math.floor(min + Math.random() * (max + 1 - min))]].flat();
+    }
+    return res;
+}
+
+console.log(addMarksForTeams(teamsAndSubject, 1, 5));
